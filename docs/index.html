@@ -10,7 +10,7 @@
             background-color: black;
             color: white;
             text-align: center;
-            margin-top: 25%;
+            margin-top: 10%; /* Adjust margin for smaller screens */
             overflow: hidden;
         }
         a {
@@ -27,13 +27,13 @@
         }
         .particle {
             position: absolute;
-            width: 2px;
-            height: 2px;
+            width: 1px; /* Smaller particle size for smaller screens */
+            height: 1px; /* Smaller particle size for smaller screens */
             background: #ffffff;
             opacity: 0.75;
             pointer-events: none;
             animation: particle 2s infinite;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8); /* Adjust shadow size */
         }
         @keyframes particle {
             0% {
@@ -50,6 +50,11 @@
             top: 0;
             left: 0;
             z-index: 0;
+        }
+        pre {
+            font-family: monospace; /* Ensure fixed-width font for ASCII art */
+            font-size: 14px; /* Adjust font size for readability */
+            line-height: 1.5; /* Increase line height for better spacing */
         }
     </style>
 </head>
