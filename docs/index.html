@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,10 +14,10 @@
             overflow: hidden;
             opacity: 0; /* Initially hide body content */
             transition: opacity 0.5s ease-in; /* Smooth fade-in transition */
+            font-family: "Pixelify Sans";
         }
         a {
             color: white;
-            font-family: "Pixelify Sans";
             text-decoration: none;
             position: relative;
             z-index: 20; /* Ensure link is above particles */
@@ -68,6 +68,20 @@
                 font-size: 2rem; /* Reduce font size for smaller screens */
             }
         }
+
+        /* Styles for the chart container */
+        .chart-container {
+            position: relative;
+            width: 80%; /* Adjust width as needed */
+            margin: auto; /* Center align */
+            margin-top: 20px; /* Adjust spacing */
+        }
+
+        /* Adjust canvas size for responsiveness */
+        #connectionChart {
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+        }
     </style>
 </head>
 <body>
@@ -94,11 +108,18 @@ Executed by
     <source src="im_forever_strong_audio.m4a" type="audio/mpeg">
 </audio>
 
+<!-- Chart container for the connection time chart -->
+<div class="chart-container">
+    <canvas id="connectionChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Fade in body content
     document.addEventListener('DOMContentLoaded', function() {
         document.body.style.opacity = 1;
         startSnow(); // Start snow effect after fade-in
+        setupChart(); // Setup and start the connection time chart
     });
 
     // Function to start snow effect
@@ -172,7 +193,64 @@ Executed by
             canvas.height = window.innerHeight;
         });
     }
-</script>
 
-</body>
-</html>
+    // Function to setup and start the connection time chart
+    function setupChart() {
+        const ctx = document.getElementById('connectionChart').getContext('2d');
+
+        // Initialize data with empty values
+        let labels = [];
+        let data = [];
+
+        // Function to update chart data
+        function updateChart() {
+            // Get current time in seconds
+            const currentTime = Math.floor(new Date().getTime() / 1000);
+
+            // Update labels and data
+            labels.push(currentTime);
+            data.push(currentTime);
+
+            // Limit data to show last 60 seconds (for demonstration)
+            if (labels.length > 60) {
+                labels.shift();
+                data.shift();
+            }
+
+            // Update chart
+            connectionChart.data.labels = labels.map(label => formatTime(label));
+            connectionChart.data.datasets[0].data = data;
+            connectionChart.update();
+        }
+
+        // Function to format time in HH:MM:SS
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Chart configuration
+        const options = {
+            scales: {
+                x: {
+                    type: 'linear',
+                    ticks: {
+                        callback: function(value) {
+                            return formatTime(value);
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const time = context.parsed.y;
+                            return `Connection time: ${formatTime(time)}`;
+                        }
+                    }
