@@ -12,9 +12,22 @@
         <p>Welcome, <span id="usernamePlaceholder">[Username]</span>!</p>
         <p>Here you can edit your profile, upload a song, background photo/video, and profile picture.</p>
         <form id="profileForm">
-            <input type="file" id="backgroundFile" class="input-field" accept="image/*, video/*">
-            <input type="file" id="songFile" class="input-field" accept="audio/*">
-            <input type="file" id="profilePictureFile" class="input-field" accept="image/*">
+            <div class="form-group">
+                <label for="backgroundFile">Background Photo/Video:</label>
+                <input type="file" id="backgroundFile" name="backgroundFile" class="input-field" accept="image/*, video/*">
+            </div>
+            <div class="form-group">
+                <label for="songFile">Upload Song:</label>
+                <input type="file" id="songFile" name="songFile" class="input-field" accept="audio/*">
+            </div>
+            <div class="form-group">
+                <label for="profilePictureFile">Profile Picture:</label>
+                <input type="file" id="profilePictureFile" name="profilePictureFile" class="input-field" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio (max 40 characters):</label>
+                <input type="text" id="bio" name="bio" class="input-field" maxlength="40">
+            </div>
             <button type="submit" class="button">Save Changes</button>
         </form>
         <!-- Add more dashboard functionality here -->
