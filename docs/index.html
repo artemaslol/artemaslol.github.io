@@ -188,14 +188,14 @@ Executed by
                     type: 'realtime',
                     realtime: {
                         delay: 200,
+                        duration: 10000,
+                        refresh: 1000,
                         onRefresh: function(chart) {
-                            chart.data.labels.push('');
                             chart.data.datasets.forEach(dataset => {
                                 dataset.data.push(Math.random() < 0.2 ? Math.random() * 10 : Math.random() * 5);
                             });
 
-                            if (chart.data.labels.length > 50) {
-                                chart.data.labels.shift();
+                            if (chart.data.datasets[0].data.length > 50) {
                                 chart.data.datasets.forEach(dataset => {
                                     dataset.data.shift();
                                 });
