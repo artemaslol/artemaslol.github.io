@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Site - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard</h1>
+        <p>Welcome, <span id="usernamePlaceholder">[Username]</span>!</p>
+        <p>Here you can edit your profile, upload a song, background photo/video, and profile picture.</p>
+        <form id="profileForm">
+            <input type="file" id="backgroundFile" class="input-field" accept="image/*, video/*">
+            <input type="file" id="songFile" class="input-field" accept="audio/*">
+            <input type="file" id="profilePictureFile" class="input-field" accept="image/*">
+            <button type="submit" class="button">Save Changes</button>
+        </form>
+        <!-- Add more dashboard functionality here -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

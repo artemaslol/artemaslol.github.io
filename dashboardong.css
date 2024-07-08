@@ -1,0 +1,101 @@
+/* Body styles */
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    /* Ensure relative positioning for absolute elements */
+}
+
+/* Rain container styles */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Ensure the rain GIF doesn't overflow */
+    z-index: 1;
+    /* Ensure the rain GIF is above other content */
+}
+
+.rain-gif {
+    width: 100vw;
+    /* Set width to viewport width */
+    height: 100vh;
+    /* Set height to viewport height */
+    object-fit: cover;
+}
+
+/* Navigation styles */
+nav {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 20px;
+    /* Rounded edges */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    /* Slight white glow */
+    z-index: 2;
+    /* Ensure the navigation is above the rain GIF */
+}
+
+/* Title image styles */
+.title-image {
+    display: block;
+    margin: auto;
+    width: 60%;
+    filter: drop-shadow(0 0 10px rgb(247, 245, 245));
+    /* Add slight white glow */
+    z-index: 2;
+    /* Ensure the title image is above the rain GIF */
+    margin-top: 50px;
+    /* Adjust margin-top to move the image down */
+}
+
+/* Main content styles */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    /* Ensure relative positioning for absolute elements */
+    z-index: 2;
+    /* Ensure the main content is above the rain GIF */
+}
+
+.top-options {
+    position: fixed;
+    top: 20px;
+    /* Adjust as needed */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    /* Ensure the top options are above the rain */
+}
+
+.option {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    /* Make the text bold */
+    padding: 10px 20px;
+    /* Add padding to create a pressable area */
+    border-radius: 20px;
+    /* Rounded edges */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Dark background with slight transparency */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    /* Slight white glow */
+}
+
+.option:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Slight white glow on hover */
+}
