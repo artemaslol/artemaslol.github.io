@@ -59,11 +59,13 @@
             font-size: 14px; /* Adjust font size for readability */
             line-height: 1.5; /* Increase line height for better spacing */
         }
-        /* Adjust text size for mobile screens */
+        .giant-text {
+            font-size: 3rem; /* Adjust the size of giant text for desktop */
+        }
+        
         @media only screen and (max-width: 600px) {
-            pre {
-                font-size: 12px; /* Reduce ASCII art font size */
-                margin-top: 5%; /* Adjust margin-top for smaller screens */
+            .giant-text {
+                font-size: 2rem; /* Reduce font size for smaller screens */
             }
         }
     </style>
@@ -85,6 +87,7 @@ Killed by
 <a class="particle-text" href="https://ammo.lol/mitsuki">KURXXED</a>
 Executed by
 <a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
+
 
 <canvas id="snowCanvas"></canvas>
 <audio id="bgMusic" autoplay loop>
