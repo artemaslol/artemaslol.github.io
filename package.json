@@ -11,3 +11,8 @@
   "author": "",
   "license": "ISC"
 }
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start"
+},
