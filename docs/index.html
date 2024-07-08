@@ -11,7 +11,7 @@
             color: white;
             text-align: center;
             font-family: "Pixelify Sans";
-            overflow: hidden; /* Prevents horizontal scrolling */
+            overflow: hidden; /* Prevent scrolling */
         }
         a {
             color: white;
@@ -28,7 +28,7 @@
         #connectionChart {
             margin-top: 20px;
         }
-        #waveCanvas {
+        #snowCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -79,50 +79,93 @@ Executed by
     <canvas id="connectionChart"></canvas>
 </div>
 
-<canvas id="waveCanvas"></canvas>
+<canvas id="snowCanvas"></canvas>
 <audio id="bgMusic" autoplay loop>
     <source src="youllneverknow.mp4" type="audio/mp4">
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Start wave effect
-    startWave();
+    // Start snow effect
+    startSnow();
 
     // Start connection time chart
     startChart();
 
-    function startWave() {
-        const canvas = document.getElementById('waveCanvas');
+    function startSnow() {
+        const canvas = document.getElementById('snowCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        function drawWave(offsetX) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height / 2);
-            for (let x = 0; x < canvas.width; x += 10) {
-                const y = canvas.height / 2 + Math.sin((x + offsetX) * 0.01) * 50;
-                ctx.lineTo(x, y);
-            }
-            ctx.lineTo(canvas.width, canvas.height);
-            ctx.lineTo(0, canvas.height);
-            ctx.closePath();
-            
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-            ctx.fill();
+        const snowflakes = [];
+        const numFlakes = 200;
 
-            requestAnimationFrame(() => drawWave(offsetX + 1)); // Adjust speed of wave movement
+        class Snowflake {
+            constructor(x, y, speed, size, opacity) {
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.size = size;
+                this.opacity = opacity;
+                this.angle = Math.random() * 2 * Math.PI;
+                this.spin = Math.random() * 0.02 - 0.01;
+            }
+
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.angle) * 0.5;
+                this.angle += this.spin;
+
+                // Reset snowflake position if it goes below the canvas
+                if (this.y > canvas.height + this.size) {
+                    this.y = -this.size;
+                    this.x = Math.random() * canvas.width;
+                    this.opacity = 1;
+                }
+                
+                // Fade out snowflake as it approaches bottom of canvas
+                if (this.y > canvas.height - 50) {
+                    this.opacity -= 0.01;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = 'white';
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
         }
 
-        drawWave(0);
+        for (let i = 0; i < numFlakes; i++) {
+            snowflakes.push(new Snowflake(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 3 + 1,
+                Math.random() * 2 + 1,
+                1
+            ));
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
+            });
+            requestAnimationFrame(draw);
+        }
+
+        draw();
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            drawWave(0); // Redraw wave on resize
         });
     }
 
@@ -134,7 +177,7 @@ Executed by
                 label: 'Connection Time (seconds)',
                 data: [],
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'white',
                 tension: 0.1
             }]
         };
@@ -142,29 +185,31 @@ Executed by
         const options = {
             scales: {
                 x: {
-                    type: 'linear',
-                    ticks: {
-                        callback: function(value) {
-                            return `${value}s`;
+                    type: 'realtime',
+                    realtime: {
+                        delay: 200,
+                        onRefresh: function(chart) {
+                            chart.data.labels.push('');
+                            chart.data.datasets.forEach(dataset => {
+                                dataset.data.push(Math.random() < 0.2 ? Math.random() * 10 : Math.random() * 5);
+                            });
+
+                            if (chart.data.labels.length > 50) {
+                                chart.data.labels.shift();
+                                chart.data.datasets.forEach(dataset => {
+                                    dataset.data.shift();
+                                });
+                            }
                         }
                     }
                 },
                 y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Time (seconds)'
-                    }
+                    beginAtZero: true
                 }
             },
             plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const time = context.parsed.y;
-                            return `Connection time: ${formatTime(time)}`;
-                        }
-                    }
+                legend: {
+                    display: false
                 }
             }
         };
@@ -174,23 +219,6 @@ Executed by
             data: data,
             options: options
         });
-
-        function updateChart() {
-            const currentTime = Math.floor(new Date().getTime() / 1000);
-
-            connectionChart.data.labels.push(currentTime);
-            connectionChart.data.datasets[0].data.push(Math.random() * 20 + 10); // Random data for demonstration
-
-            if (connectionChart.data.labels.length > 60) {
-                connectionChart.data.labels.shift();
-                connectionChart.data.datasets[0].data.shift();
-            }
-
-            connectionChart.update();
-            setTimeout(updateChart, 1000); // Update every second
-        }
-
-        updateChart();
     }
 </script>
 
