@@ -68,19 +68,16 @@
                 font-size: 2rem; /* Reduce font size for smaller screens */
             }
         }
-
-        /* Styles for the chart container */
+        
         .chart-container {
             position: relative;
             width: 80%; /* Adjust width as needed */
             margin: auto; /* Center align */
             margin-top: 20px; /* Adjust spacing */
         }
-
-        /* Adjust canvas size for responsiveness */
         #connectionChart {
-            width: 100%;
-            height: 300px; /* Adjust height as needed */
+            margin-top: 20px; /* Adjust spacing */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* White edge glow effect */
         }
     </style>
 </head>
@@ -102,16 +99,14 @@ Killed by
 Executed by
 <a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
 
+<div class="chart-container">
+    <canvas id="connectionChart"></canvas>
+</div>
 
 <canvas id="snowCanvas"></canvas>
 <audio id="bgMusic" autoplay loop>
     <source src="im_forever_strong_audio.m4a" type="audio/mpeg">
 </audio>
-
-<!-- Chart container for the connection time chart -->
-<div class="chart-container">
-    <canvas id="connectionChart"></canvas>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -119,7 +114,7 @@ Executed by
     document.addEventListener('DOMContentLoaded', function() {
         document.body.style.opacity = 1;
         startSnow(); // Start snow effect after fade-in
-        setupChart(); // Setup and start the connection time chart
+        startChart(); // Start connection time chart
     });
 
     // Function to start snow effect
@@ -194,56 +189,36 @@ Executed by
         });
     }
 
-    // Function to setup and start the connection time chart
-    function setupChart() {
+    // Function to start connection time chart
+    function startChart() {
         const ctx = document.getElementById('connectionChart').getContext('2d');
+        const data = {
+            labels: [],
+            datasets: [{
+                label: 'Connection Time (seconds)',
+                data: [],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
 
-        // Initialize data with empty values
-        let labels = [];
-        let data = [];
-
-        // Function to update chart data
-        function updateChart() {
-            // Get current time in seconds
-            const currentTime = Math.floor(new Date().getTime() / 1000);
-
-            // Update labels and data
-            labels.push(currentTime);
-            data.push(currentTime);
-
-            // Limit data to show last 60 seconds (for demonstration)
-            if (labels.length > 60) {
-                labels.shift();
-                data.shift();
-            }
-
-            // Update chart
-            connectionChart.data.labels = labels.map(label => formatTime(label));
-            connectionChart.data.datasets[0].data = data;
-            connectionChart.update();
-        }
-
-        // Function to format time in HH:MM:SS
-        function formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-
-        // Chart configuration
         const options = {
             scales: {
                 x: {
                     type: 'linear',
                     ticks: {
                         callback: function(value) {
-                            return formatTime(value);
+                            return `${value}s`;
                         }
                     }
                 },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Time (seconds)'
+                    }
                 }
             },
             plugins: {
@@ -254,3 +229,46 @@ Executed by
                             return `Connection time: ${formatTime(time)}`;
                         }
                     }
+                }
+            }
+        };
+
+        const connectionChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+
+        // Function to update chart data
+        function updateChart() {
+            // Get current time in seconds
+            const currentTime = Math.floor(new Date().getTime() / 1000);
+
+            // Update labels and data
+            connectionChart.data.labels.push(currentTime);
+            connectionChart.data.datasets[0].data.push(currentTime);
+
+            // Limit data to show last 60 seconds (for demonstration)
+            if (connectionChart.data.labels.length > 60) {
+                connectionChart.data.labels.shift();
+                connectionChart.data.datasets[0].data.shift();
+            }
+
+            // Update chart
+            connectionChart.update();
+        }
+
+        // Start updating the chart every second
+        setInterval(updateChart, 1000);
+    }
+
+    // Function to format time in HH:MM:SS
+    function formatTime(seconds) {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+</script>
+</body>
+</html>
