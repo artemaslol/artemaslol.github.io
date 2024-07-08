@@ -59,6 +59,13 @@
             font-size: 14px; /* Adjust font size for readability */
             line-height: 1.5; /* Increase line height for better spacing */
         }
+        /* Adjust text size for mobile screens */
+        @media only screen and (max-width: 600px) {
+            pre {
+                font-size: 12px; /* Reduce ASCII art font size */
+                margin-top: 5%; /* Adjust margin-top for smaller screens */
+            }
+        }
     </style>
 </head>
 <body>
@@ -78,7 +85,6 @@ Killed by
 <a class="particle-text" href="https://ammo.lol/mitsuki">KURXXED</a>
 Executed by
 <a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
-
 
 <canvas id="snowCanvas"></canvas>
 <audio id="bgMusic" autoplay loop>
