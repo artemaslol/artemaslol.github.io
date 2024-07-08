@@ -17,10 +17,12 @@
             color: white;
             font-family: "Pixelify Sans";
             text-decoration: none;
+            position: relative;
+            z-index: 20; /* Ensure link is above particles */
         }
         .particle-text {
             color: #fff;
-            position: relative;
+            position: relative; /* Ensure particles don't cover link */
             z-index: 10;
         }
         .particle {
@@ -43,6 +45,12 @@
                 opacity: 0;
             }
         }
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
     </style>
 </head>
 <body>
@@ -58,29 +66,81 @@ o888o  o888o  `V88V"V8P' d888b    o88'   888o o88'   888o `8bd88P'   `8bd88P'
 
 Killed by
 <a class="particle-text" href="https://t.me/kurxx33">KURXX33</a>
+
+<canvas id="snowCanvas"></canvas>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        function createParticle(x, y) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = `${x}px`;
-            particle.style.top = `${y}px`;
-            particle.style.setProperty('--x', `${(Math.random() - 0.5) * 100}px`);
-            particle.style.setProperty('--y', `${(Math.random() - 0.5) * 100}px`);
-            document.body.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 5000);
+    const canvas = document.getElementById('snowCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const snowflakes = [];
+    const numFlakes = 200;
+
+    class Snowflake {
+        constructor(x, y, speed, size, opacity) {
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+            this.size = size;
+            this.opacity = opacity;
+            this.angle = Math.random() * 2 * Math.PI;
+            this.spin = Math.random() * 0.02 - 0.01; // Random spin between -0.01 and 0.01
         }
-        
-        function generateParticles() {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            createParticle(x, y);
+
+        update() {
+            this.y += this.speed;
+            this.x += Math.sin(this.angle) * 0.5; // Slight horizontal movement
+            this.angle += this.spin; // Rotate the snowflake
+
+            if (this.y > canvas.height) {
+                this.y = -this.size;
+                this.x = Math.random() * canvas.width;
+                this.opacity = 1;
+            }
         }
-        
-        setInterval(generateParticles, 50);
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'white';
+            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+            ctx.restore();
+        }
+    }
+
+    for (let i = 0; i < numFlakes; i++) {
+        snowflakes.push(new Snowflake(
+            Math.random() * canvas.width,
+            Math.random() * canvas.height,
+            Math.random() * 3 + 1,
+            Math.random() * 2 + 1,
+            1
+        ));
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        snowflakes.forEach(flake => {
+            flake.update();
+            flake.draw();
+        });
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
 </script>
 </body>
