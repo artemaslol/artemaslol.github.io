@@ -1,0 +1,16 @@
+name = "artemas-lol"
+type = "javascript"
+
+account_id = "<your_account_id>"
+workers_dev = true  # Set to true if you're using Workers.dev for development
+
+[build]
+  command = "npm run build"  # Adjust based on your build command
+  upload_format = "service-worker"
+
+[site]
+  bucket = "./docs"  # Adjust to your build output directory
+
+[env.production]
+  name = "artemas-lol"
+  workers_dev = false  # Set to false for production deployments
