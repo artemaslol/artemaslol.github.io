@@ -1,0 +1,13 @@
+{
+  "name": "artemas.lol",
+  "version": "1.0.0",
+  "description": "Artemas.lol Bio Site and Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "start": "node worker.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
