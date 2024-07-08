@@ -116,6 +116,7 @@ Executed by
         document.body.style.opacity = 1;
         startSnow(); // Start snow effect after fade-in
         startChart(); // Start connection time chart
+        checkCloudflare(); // Check if Cloudflare is active
     });
 
     // Function to start snow effect
@@ -269,6 +270,24 @@ Executed by
         const mins = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
         return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Function to check if Cloudflare is active
+    function checkCloudflare() {
+        fetch('/', { method: 'HEAD' })
+            .then(response => {
+                const cfHeader = response.headers.get('cf-cache-status');
+                const isCloudflareActive = cfHeader && cfHeader.toLowerCase() === 'hit';
+                const statusElement = document.createElement('p');
+                statusElement.textContent = isCloudflareActive ? 'Cloudflare is active!' : 'Cloudflare is not active.';
+                document.body.appendChild(statusElement);
+            })
+            .catch(error => {
+                console.error('Error checking Cloudflare:', error);
+                const statusElement = document.createElement('p');
+                statusElement.textContent = 'Failed to check Cloudflare status.';
+                document.body.appendChild(statusElement);
+            });
     }
 </script>
 </body>
