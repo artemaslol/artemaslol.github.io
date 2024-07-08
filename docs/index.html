@@ -11,6 +11,7 @@
             color: white;
             text-align: center;
             font-family: "Pixelify Sans";
+            overflow: hidden; /* Prevents horizontal scrolling */
         }
         a {
             color: white;
@@ -27,7 +28,7 @@
         #connectionChart {
             margin-top: 20px;
         }
-        #snowCanvas {
+        #waveCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -78,87 +79,50 @@ Executed by
     <canvas id="connectionChart"></canvas>
 </div>
 
-<canvas id="snowCanvas"></canvas>
+<canvas id="waveCanvas"></canvas>
 <audio id="bgMusic" autoplay loop>
     <source src="youllneverknow.mp4" type="audio/mp4">
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Start snow effect
-    startSnow();
+    // Start wave effect
+    startWave();
 
     // Start connection time chart
     startChart();
 
-    function startSnow() {
-        const canvas = document.getElementById('snowCanvas');
+    function startWave() {
+        const canvas = document.getElementById('waveCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const snowflakes = [];
-        const numFlakes = 200;
-
-        class Snowflake {
-            constructor(x, y, speed, size, opacity) {
-                this.x = x;
-                this.y = y;
-                this.speed = speed;
-                this.size = size;
-                this.opacity = opacity;
-                this.angle = Math.random() * 2 * Math.PI;
-                this.spin = Math.random() * 0.02 - 0.01;
-            }
-
-            update() {
-                this.y += this.speed;
-                this.x += Math.sin(this.angle) * 0.5;
-                this.angle += this.spin;
-
-                if (this.y > canvas.height) {
-                    this.y = -this.size;
-                    this.x = Math.random() * canvas.width;
-                    this.opacity = 1;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.shadowBlur = 5;
-                ctx.shadowColor = 'white';
-                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-                ctx.restore();
-            }
-        }
-
-        for (let i = 0; i < numFlakes; i++) {
-            snowflakes.push(new Snowflake(
-                Math.random() * canvas.width,
-                Math.random() * canvas.height,
-                Math.random() * 3 + 1,
-                Math.random() * 2 + 1,
-                1
-            ));
-        }
-
-        function draw() {
+        function drawWave(offsetX) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            snowflakes.forEach(flake => {
-                flake.update();
-                flake.draw();
-            });
-            requestAnimationFrame(draw);
+            
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            for (let x = 0; x < canvas.width; x += 10) {
+                const y = canvas.height / 2 + Math.sin((x + offsetX) * 0.01) * 50;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.closePath();
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fill();
+
+            requestAnimationFrame(() => drawWave(offsetX + 1)); // Adjust speed of wave movement
         }
 
-        draw();
+        drawWave(0);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            drawWave(0); // Redraw wave on resize
         });
     }
 
@@ -215,26 +179,6 @@ Executed by
             const currentTime = Math.floor(new Date().getTime() / 1000);
 
             connectionChart.data.labels.push(currentTime);
-            connectionChart.data.datasets[0].data.push(currentTime);
+            connectionChart.data.datasets[0].data.push(Math.random() * 20 + 10); // Random data for demonstration
 
-            if (connectionChart.data.labels.length > 60) {
-                connectionChart.data.labels.shift();
-                connectionChart.data.datasets[0].data.shift();
-            }
-
-            connectionChart.update();
-        }
-
-        setInterval(updateChart, 1000);
-    }
-
-    function formatTime(seconds) {
-        const hrs = Math.floor(seconds / 3600);
-        const mins = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-</script>
-
-</body>
-</html>
+            if (connectionChart.data.labels.length > 60)
