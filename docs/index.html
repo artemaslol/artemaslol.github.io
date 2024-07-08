@@ -10,43 +10,22 @@
             background-color: black;
             color: white;
             text-align: center;
-            margin-top: 10%; /* Adjust margin for smaller screens */
-            overflow: hidden;
-            opacity: 0; /* Initially hide body content */
-            transition: opacity 0.5s ease-in; /* Smooth fade-in transition */
             font-family: "Pixelify Sans";
         }
         a {
             color: white;
             text-decoration: none;
-            position: relative;
-            z-index: 20; /* Ensure link is above particles */
         }
         .particle-text {
-            color: #fff;
-            position: relative; /* Ensure particles don't cover link */
-            z-index: 10;
+            color: white;
         }
-        .particle {
-            position: absolute;
-            width: 1px; /* Smaller particle size for smaller screens */
-            height: 1px; /* Smaller particle size for smaller screens */
-            background: #ffffff;
-            opacity: 0.75;
-            pointer-events: none;
-            animation: particle 2s infinite;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8); /* Adjust shadow size */
-            display: none; /* Hide particles initially */
+        .chart-container {
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
         }
-        @keyframes particle {
-            0% {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--x), var(--y));
-                opacity: 0;
-            }
+        #connectionChart {
+            margin-top: 20px;
         }
         #snowCanvas {
             position: fixed;
@@ -55,45 +34,37 @@
             z-index: 0;
         }
         pre {
-            font-family: monospace; /* Ensure fixed-width font for ASCII art */
-            font-size: 14px; /* Adjust font size for readability */
-            line-height: 1.5; /* Increase line height for better spacing */
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+            margin-top: 20px;
         }
         .giant-text {
-            font-size: 3rem; /* Adjust the size of giant text for desktop */
+            font-size: 3rem;
         }
-        
         @media only screen and (max-width: 600px) {
             .giant-text {
-                font-size: 2rem; /* Reduce font size for smaller screens */
+                font-size: 2rem;
             }
-        }
-        
-        .chart-container {
-            position: relative;
-            width: 80%; /* Adjust width as needed */
-            margin: auto; /* Center align */
-            margin-top: 20px; /* Adjust spacing */
-        }
-        #connectionChart {
-            margin-top: 20px; /* Adjust spacing */
         }
     </style>
 </head>
 <body>
+
 <pre>
                 ,.,   '           ,. -  .,                       ,  . .,  °                   _,.,  °        ,·'´¨;.  '                                   ,.,   '                   ,. -,    
               ;´   '· .,        ,' ,. -  .,  `' ·,          ;'´    ,   ., _';\'          ,.·'´  ,. ,  `;\ '      ;   ';:\           .·´¨';\                 ;´   '· .,            ,.·'´,    ,'\   
             .´  .-,    ';\      '; '·~;:::::'`,   ';\       \:´¨¯:;'   `;::'\:'\       .´   ;´:::::\`'´ \'\     ;     ';:'\      .'´     ;:'\              .´  .-,    ';\      ,·'´ .·´'´-·'´::::\' 
-           /   /:\:';   ;:'\'     ;   ,':\::;:´  .·´::\'       \::::;   ,'::_'\;'      /   ,'::\::::::\:::\:'    ;   ,  '·:;  .·´,.´';  ,'::;'             /   /:\:';   ;:'\'   ;    ';:::\::\::;:'  
+           /   /:\:';  ;:'\'     ;   ,':\::;:´  .·´::\'       \::::;   ,'::_'\;'      /   ,'::\::::::\:::\:'    ;   ,  '·:;  .·´,.´';  ,'::;'             /   /:\:';   ;:'\'   ;    ';:::\::\::;:'  
          ,'  ,'::::'\';  ;::';     ;  ·'-·'´,.-·'´:::::::';          ,'  ,'::;'  ‘       ;   ;:;:-·'~^ª*';\'´     ;   ;'`.    ¨,.·´::;'  ;:::;            ,'  ,'::::'\';  ;::';   \·.    `·;:'-·'´     
      ,.-·'  '·~^*'´¨,  ';::;   ;´    ':,´:::::::::::·´'           ;  ;:::;  °       ;  ,.-·:*'´¨'`*´\::\ '    ;  ';::; \*´\:::::;  ,':::;‘        ,.-·'  '·~^*'´¨,  ';::;    \:`·.   '`·,  '     
-     ':,  ,·:²*´¨¯'`;  ;::';    ';  ,    `·:;:-·'´                ;  ;::;'  ‘       ;   ;\::::::::::::'\;'    ';  ,'::;   \::\;:·';  ;:::; '        ':,  ,·:²*´¨¯'`;  ;::';      `·:'`·,   \'      
-     ,'  / \::::::::';  ;::';    ; ,':\'`:·.,  ` ·.,               ;  ;::;'‚         ;  ;'_\_:;:: -·^*';\    ;  ';::;     '*´  ;',·':::;‘          ,'  / \::::::::';  ;::';       ,.'-:;'  ,·\     
+     ':,  ,·:²*´¨¯'`;  ;::';    ';  ,    `·:;:-·'´                ;  ;::;'‘       ;   ;\::::::::::::'\;'    ';  ,'::;   \::\;:·';  ;:::; '        ':,  ,·:²*´¨¯'`;  ;::';      `·:'`·,   \'      
+     ,'  / \::::::::';  ;::';    ; ,':\'`:·.,  ` ·.,               ;  ;::;'‚         ;  ;'_\_:;:: -·^*';\    ;  ';::;     '*´  ;',·':::;‘         ,'  / \::::::::';  ;::';       ,.'-:;'  ,·\     
     ,' ,'::::\·²*'´¨¯':,'\:;     \·-;::\:::::'`:·-.,';             ',.'\::;'‚         ';    ,  ,. -·:*'´:\:'\°  \´¨\::;          \¨\::::;          ,' ,'::::\·²*'´¨¯':,'\:;   ,·'´     ,.·´:::'\    
-    \`¨\:::/          \::\'      \::\:;'` ·:;:::::\::\'            \::\:;'‚          \`*´ ¯\:::::::::::\;' '  '\::\;            \:\;·'           \`¨\:::/          \::\'    \`*'´\::::::::;·'‘   
-     '\::\;'            '\;'  '     '·-·'       `' · -':::''            \;:'      ‘        \:::::\;::-·^*'´         '´¨               ¨'              '\::\;'            '\;'  '   \::::\:;:·´        
-       `¨'                                                           °                 `*´¯                                                     `¨'                        '`*'´‘            
+    \`¨\:::/          \::\'      \::\:;'` ·:;:::::\::\'            \::\:;'‚          \`*´ ¯\:::::::::::\;' '  '\::\;            \:\;·'‘          \`¨\:::/          \::\'    \`*'´\::::::::;·'‘   
+     '\::\;'            '\;'  '     '·-·'       `' · -':::''            \;:'‘      ‘       \:::::\;::-·^*'´         '´¨               ¨'                       '\::\;'            '\;'  '‘   \::::\:;:·´        
+       `¨'                                                                                   `*´¯                                                     `¨'                        '`*'´‘            
 </pre>
 
 Murdered by
@@ -114,14 +85,12 @@ Executed by
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Fade in body content
-    document.addEventListener('DOMContentLoaded', function() {
-        document.body.style.opacity = 1;
-        startSnow(); // Start snow effect after fade-in
-        startChart(); // Start connection time chart
-    });
+    // Start snow effect
+    startSnow();
 
-    // Function to start snow effect
+    // Start connection time chart
+    startChart();
+
     function startSnow() {
         const canvas = document.getElementById('snowCanvas');
         const ctx = canvas.getContext('2d');
@@ -139,13 +108,13 @@ Executed by
                 this.size = size;
                 this.opacity = opacity;
                 this.angle = Math.random() * 2 * Math.PI;
-                this.spin = Math.random() * 0.02 - 0.01; // Random spin between -0.01 and 0.01
+                this.spin = Math.random() * 0.02 - 0.01;
             }
 
             update() {
                 this.y += this.speed;
-                this.x += Math.sin(this.angle) * 0.5; // Slight horizontal movement
-                this.angle += this.spin; // Rotate the snowflake
+                this.x += Math.sin(this.angle) * 0.5;
+                this.angle += this.spin;
 
                 if (this.y > canvas.height) {
                     this.y = -this.size;
@@ -193,7 +162,6 @@ Executed by
         });
     }
 
-    // Function to start connection time chart
     function startChart() {
         const ctx = document.getElementById('connectionChart').getContext('2d');
         const data = {
@@ -243,29 +211,30 @@ Executed by
             options: options
         });
 
-        // Function to update chart data
         function updateChart() {
-            // Get current time in seconds
             const currentTime = Math.floor(new Date().getTime() / 1000);
 
-            // Update labels and data
             connectionChart.data.labels.push(currentTime);
             connectionChart.data.datasets[0].data.push(currentTime);
 
-            // Limit data to show last 60 seconds (for demonstration)
             if (connectionChart.data.labels.length > 60) {
                 connectionChart.data.labels.shift();
                 connectionChart.data.datasets[0].data.shift();
             }
 
-            // Update chart
             connectionChart.update();
         }
 
-        // Start updating the chart every second
         setInterval(updateChart, 1000);
     }
 
-    // Function to format time in HH:MM:SS
     function formatTime(seconds) {
-        const hrs = Math.floor(seconds / 
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+</script>
+
+</body>
+</html>
