@@ -106,8 +106,10 @@ Executed by
 
 <canvas id="snowCanvas"></canvas>
 
+<p id="cfStatus">Checking Cloudflare status...</p>
+
 <audio id="bgMusic" autoplay loop>
-<source src="/docs/imforeverstrong.m4a" type="audio/mpeg">
+<source src="/docs/youllneverknow.mp4" type="audio/mp4">
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -246,54 +248,15 @@ Executed by
             options: options
         });
 
-        // Function to update chart data
+        // Function to update chart data with random dips and spikes
         function updateChart() {
             // Get current time in seconds
             const currentTime = Math.floor(new Date().getTime() / 1000);
 
-            // Update labels and data
-            connectionChart.data.labels.push(currentTime);
-            connectionChart.data.datasets[0].data.push(currentTime);
+            // Generate a random number between -10 and 10 to create dips and spikes
+            const randomOffset = Math.random() * 20 - 10;
 
-            // Limit data to show last 60 seconds (for demonstration)
-            if (connectionChart.data.labels.length > 60) {
-                connectionChart.data.labels.shift();
-                connectionChart.data.datasets[0].data.shift();
-            }
+            // Add random offset to current time to simulate dips and spikes
+            const newDataPoint = currentTime + randomOffset;
 
-            // Update chart
-            connectionChart.update();
-        }
-
-        // Start updating the chart every second
-        setInterval(updateChart, 1000);
-    }
-
-    // Function to format time in HH:MM:SS
-    function formatTime(seconds) {
-        const hrs = Math.floor(seconds / 3600);
-        const mins = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    // Function to check if Cloudflare is active
-    function checkCloudflare() {
-        fetch('/', { method: 'HEAD' })
-            .then(response => {
-                const cfHeader = response.headers.get('cf-cache-status');
-                const isCloudflareActive = cfHeader && cfHeader.toLowerCase() === 'hit';
-                const statusElement = document.createElement('p');
-                statusElement.textContent = isCloudflareActive ? 'Cloudflare is active!' : 'Cloudflare is not active.';
-                document.body.appendChild(statusElement);
-            })
-            .catch(error => {
-                console.error('Error checking Cloudflare:', error);
-                const statusElement = document.createElement('p');
-                statusElement.textContent = 'Failed to check Cloudflare status.';
-                document.body.appendChild(statusElement);
-            });
-    }
-</script>
-</body>
-</html>
+            // Update labels and
