@@ -7,13 +7,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "worker": "node worker.js"  // Add your worker script if needed
+    "worker": "node worker.js"  
   },
   "dependencies": {
     "next": "^12.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
-    // Add any additional dependencies here
+
   },
   "devDependencies": {},
   "author": "",
