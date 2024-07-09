@@ -1,141 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artemas.lol</title>
-  <link rel="stylesheet" href="dashboardong.css">
-  <style>
-    /* Import 8-bit font */
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-    /* Updated styles for top options */
-    .top-options {
-      font-family: 'Press Start 2P', cursive;
-      /* Apply 8-bit font */
-      text-align: center;
-      margin-top: 10px;
-      /* Moved options higher */
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      /* Add white glow */
-    }
-
-    .top-options .option {
-      display: inline-block;
-      margin-right: 10px;
-      font-size: 16px;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .top-options .option:not(:last-child)::after {
-      content: " / ";
-      /* Add "/" separator between options */
-    }
-
-    body {
-      overflow: hidden;
-      /* Disable scrolling */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#33 Forever</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: "Pixelify Sans";
+            overflow: hidden; /* Prevent scrolling */
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
+        .particle-text {
+            color: white;
+        }
+        .chart-container {
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
+        }
+        #connectionChart {
+            margin-top: 20px;
+        }
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        pre {
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .giant-text {
+            font-size: 3rem;
+        }
+        @media only screen and (max-width: 600px) {
+            .giant-text {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-  <nav class="top-options">
-    <a href="login.html" class="option">Login</a>
-    <a href="signup.html" class="option">Sign Up</a>
-  </nav>
+<pre>
+                ,.,   '           ,. -  .,                       ,  . .,  °                   _,.,  °        ,·'´¨;.  '                                   ,.,   '                   ,. -,    
+              ;´   '· .,        ,' ,. -  .,  `' ·,          ;'´    ,   ., _';\'          ,.·'´  ,. ,  `;\ '      ;   ';:\           .·´¨';\                 ;´   '· .,            ,.·'´,    ,'\   
+            .´  .-,    ';\      '; '·~;:::::'`,   ';\       \:´¨¯:;'   `;::'\:'\       .´   ;´:::::\`'´ \'\     ;     ';:'\      .'´     ;:'\              .´  .-,    ';\      ,·'´ .·´'´-·'´::::\' 
+           /   /:\:';  ;:'\'     ;   ,':\::;:´  .·´::\'       \::::;   ,'::_'\;'      /   ,'::\::::::\:::\:'    ;   ,  '·:;  .·´,.´';  ,'::;'             /   /:\:';   ;:'\'   ;    ';:::\::\::;:'  
+         ,'  ,'::::'\';  ;::';     ;  ·'-·'´,.-·'´:::::::';          ,'  ,'::;'  ‘       ;   ;:;:-·'~^ª*';\'´     ;   ;'`.    ¨,.·´::;'  ;:::;            ,'  ,'::::'\';  ;::';   \·.    `·;:'-·'´     
+     ,.-·'  '·~^*'´¨,  ';::;   ;´    ':,´:::::::::::·´'           ;  ;:::;  °       ;  ,.-·:*'´¨'`*´\::\ '    ;  ';::; \*´\:::::;  ,':::;‘        ,.-·'  '·~^*'´¨,  ';::;    \:`·.   '`·,  '     
+     ':,  ,·:²*´¨¯'`;  ;::';    ';  ,    `·:;:-·'´                ;  ;::;'‘       ;   ;\::::::::::::'\;'    ';  ,'::;   \::\;:·';  ;:::; '        ':,  ,·:²*´¨¯'`;  ;::';      `·:'`·,   \'      
+     ,'  / \::::::::';  ;::';    ; ,':\'`:·.,  ` ·.,               ;  ;::;'‚         ;  ;'_\_:;:: -·^*';\    ;  ';::;     '*´  ;',·':::;‘         ,'  / \::::::::';  ;::';       ,.'-:;'  ,·\     
+    ,' ,'::::\·²*'´¨¯':,'\:;     \·-;::\:::::'`:·-.,';             ',.'\::;'‚         ';    ,  ,. -·:*'´:\:'\°  \´¨\::;          \¨\::::;          ,' ,'::::\·²*'´¨¯':,'\:;   ,·'´     ,.·´:::'\    
+    \`¨\:::/          \::\'      \::\:;'` ·:;:::::\::\'            \::\:;'‚          \`*´ ¯\:::::::::::\;' '  '\::\;            \:\;·'‘          \`¨\:::/          \::\'    \`*'´\::::::::;·'‘   
+     '\::\;'            '\;'  '     '·-·'       `' · -':::''            \;:'‘      ‘       \:::::\;::-·^*'´         '´¨               ¨'                       '\::\;'            '\;'  '‘         
+       `¨'                                                                                   `*´¯                                                     `¨'                        '`*'´‘            
+</pre>
 
-  <header>
-    <img src="file:///C:/Users/mrsch/Downloads/Screenshot%202024-05-11%20114007-Photoroom.png-Photoroom.png"
-      alt="Artemas" class="title-image">
-  </header>
+Murdered by
+<a class="particle-text" href="https://t.me/kurxx33">KURXX33D</a>
+Killed by
+<a class="particle-text" href="https://ammo.lol/mitsuki">KURXXED</a>
+Executed by
+<a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
 
-  <main>
-    <!-- Removed bio box -->
-    <div class="profile-train">
-      <!-- Removed profile cards placeholders -->
-    </div>
-  </main>
+<div class="chart-container">
+    <canvas id="connectionChart"></canvas>
+</div>
 
-  <canvas id="snowCanvas"></canvas>
-  <script>
-      const canvas = document.getElementById('snowCanvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+<canvas id="snowCanvas"></canvas>
+<audio id="bgMusic" autoplay loop>
+    <source src="youllneverknow.mp4" type="audio/mp4">
+</audio>
 
-      const snowflakes = [];
-      const numFlakes = 200;
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Start snow effect
+    startSnow();
 
-      class Snowflake {
-          constructor(x, y, speed, size, opacity) {
-              this.x = x;
-              this.y = y;
-              this.speed = speed;
-              this.size = size;
-              this.opacity = opacity;
-              this.angle = Math.random() * 2 * Math.PI;
-              this.spin = Math.random() * 0.02 - 0.01; // Random spin between -0.01 and 0.01
-          }
+    // Start connection time chart
+    startChart();
 
-          update() {
-              this.y += this.speed;
-              this.x += Math.sin(this.angle) * 0.5; // Slight horizontal movement
-              this.angle += this.spin; // Rotate the snowflake
+    function startSnow() {
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-              if (this.y > canvas.height) {
-                  this.y = -this.size;
-                  this.x = Math.random() * canvas.width;
-                  this.opacity = 1;
-              }
-          }
+        const snowflakes = [];
+        const numFlakes = 200;
 
-          draw() {
-              ctx.save();
-              ctx.translate(this.x, this.y);
-              ctx.rotate(this.angle);
-              ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-              ctx.shadowBlur = 5;
-              ctx.shadowColor = 'white';
-              ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-              ctx.restore();
-          }
-      }
+        class Snowflake {
+            constructor(x, y, speed, size, opacity) {
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.size = size;
+                this.opacity = opacity;
+                this.angle = Math.random() * 2 * Math.PI;
+                this.spin = Math.random() * 0.02 - 0.01;
+            }
 
-      for (let i = 0; i < numFlakes; i++) {
-          snowflakes.push(new Snowflake(
-              Math.random() * canvas.width,
-              Math.random() * canvas.height,
-              Math.random() * 3 + 1,
-              Math.random() * 2 + 1,
-              1
-          ));
-      }
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.angle) * 0.5;
+                this.angle += this.spin;
 
-      function draw() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          snowflakes.forEach(flake => {
-              flake.update();
-              flake.draw();
-          });
-          requestAnimationFrame(draw);
-      }
+                // Reset snowflake position if it goes below the canvas
+                if (this.y > canvas.height + this.size) {
+                    this.y = -this.size;
+                    this.x = Math.random() * canvas.width;
+                    this.opacity = 1;
+                }
+                
+                // Fade out snowflake as it approaches bottom of canvas
+                if (this.y > canvas.height - 50) {
+                    this.opacity -= 0.01;
+                }
+            }
 
-      draw();
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = 'white';
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
 
-      window.addEventListener('resize', () => {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-      });
+        for (let i = 0; i < numFlakes; i++) {
+            snowflakes.push(new Snowflake(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 3 + 1,
+                Math.random() * 2 + 1,
+                1
+            ));
+        }
 
-      window.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-      });
-  </script>
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
+            });
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    }
+
+    function startChart() {
+        const ctx = document.getElementById('connectionChart').getContext('2d');
+        const data = {
+            labels: [],
+            datasets: [{
+                label: 'Connection Time (seconds)',
+                data: [],
+                fill: false,
+                borderColor: 'white',
+                tension: 0.1
+            }]
+        };
+
+        const options = {
+            scales: {
+                x: {
+                    type: 'realtime',
+                    realtime: {
+                        delay: 200,
+                        duration: 10000,
+                        refresh: 1000,
+                        onRefresh: function(chart) {
+                            chart.data.datasets.forEach(dataset => {
+                                dataset.data.push(Math.random() < 0.2 ? Math.random() * 10 : Math.random() * 5);
+                            });
+
+                            if (chart.data.datasets[0].data.length > 50) {
+                                chart.data.datasets.forEach(dataset => {
+                                    dataset.data.shift();
+                                });
+                            }
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        };
+
+        const connectionChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+
+        // Initial data load for the chart
+        for (let i = 0; i < 50; i++) {
+            data.labels.push('');
+            data.datasets[0].data.push(0);
+        }
+
+        connectionChart.update();
+    }
+</script>
+
 </body>
-
 </html>
