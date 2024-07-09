@@ -36,6 +36,12 @@
             color: white;
             font-size: 2rem;
             cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .landing-text.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
         .chart-container {
             width: 80%;
@@ -86,19 +92,21 @@
      '\::\;'            '\;'  '     '·-·'       `' · -':::''            \;:'‘      ‘       \:::::\;::-·^*'´         '´¨               ¨'                       '\::\;'            '\;'  '‘         
        `¨'                                                                                   `*´¯                                                     `¨'                        '`*'´‘            
 </pre>
+        <div class="landing-text">Click to enter!</div>
     </div>
 </div>
 
 <div id="main-content" style="display: none;">
-    <!-- Your main content here -->
     <div class="chart-container">
         <canvas id="connectionChart"></canvas>
     </div>
     <canvas id="snowCanvas"></canvas>
-    <audio id="bgMusic" autoplay loop>
-        <source src="youllneverknow.mp4" type="audio/mp4">
-    </audio>
+    <div class="giant-text" style="opacity: 0;">Artemas</div>
 </div>
+
+<audio id="bgMusic" autoplay loop>
+    <source src="youllneverknow.mp4" type="audio/mp4">
+</audio>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="chartUpdate.js"></script>
@@ -108,12 +116,16 @@
         const landingContainer = document.querySelector('.landing-container');
         const mainContent = document.getElementById('main-content');
 
-        // Fade out landing container and show main content
-        landingContainer.style.backdropFilter = 'blur(0)';
-        landingContainer.style.transition = 'backdrop-filter 0.5s ease-in-out';
+        // Fade out landing content and show main content
+        const landingContent = document.querySelector('.landing-content');
+        landingContent.style.opacity = 0;
+        landingContent.style.transition = 'opacity 0.5s ease-in-out';
         setTimeout(() => {
-            landingContainer.style.display = 'none';
+            landingContent.style.display = 'none';
             mainContent.style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('.giant-text').style.opacity = 1;
+            }, 1000); // Adjust timing to match your preference
         }, 500);
 
         // Start the snow effect and connection chart
@@ -169,37 +181,60 @@
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.angle);
                 ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.shadowBlur = 5;
-                ctx.shadowColor = 'white';
-                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.restore();
             }
         }
 
-        for (let i = 0; i < numFlakes; i++) {
-            snowflakes.push(new Snowflake(
-                Math.random() * canvas.width,
-                Math.random() * canvas.height,
-                Math.random() * 3 + 1,
-                Math.random() * 2 + 1,
-                1
-            ));
+        function createSnowflakes() {
+            for (let i = 0; i < numFlakes; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const speed = Math.random() * 2 + 1;
+                const size = Math.random() * 3 + 1;
+                const opacity = Math.random();
+                snowflakes.push(new Snowflake(x, y, speed, size, opacity));
+            }
         }
 
-        function draw() {
+        function animateSnow() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             snowflakes.forEach(flake => {
                 flake.update();
                 flake.draw();
             });
-            requestAnimationFrame(draw);
+            requestAnimationFrame(animateSnow);
         }
 
-        draw();
+        createSnowflakes();
+        animateSnow();
+    }
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+    // Function to start the connection chart
+    function startChart() {
+        const ctx = document.getElementById('connectionChart').getContext('2d');
+        const connectionChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Connection Status',
+                    data: [12, 19, 3, 5, 2, 3, 10],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     }
 </script>
