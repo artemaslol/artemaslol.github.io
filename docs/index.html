@@ -20,13 +20,14 @@
         .particle-text {
             color: white;
         }
-        .chart-container {
-            width: 80%;
-            margin: auto;
+        .link-list {
             margin-top: 20px;
+            text-align: center;
         }
-        #connectionChart {
-            margin-top: 20px;
+        .link-list a {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
         #snowCanvas {
             position: fixed;
@@ -75,8 +76,8 @@ Killed by
 Executed by
 <a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
 
-<div class="chart-container">
-    <canvas id="connectionChart"></canvas>
+<div class="link-list" id="bioLinks">
+    <!-- Links will be dynamically added here -->
 </div>
 
 <canvas id="snowCanvas"></canvas>
@@ -84,12 +85,105 @@ Executed by
     <source src="youllneverknow.mp4" type="audio/mp4">
 </audio>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="chartUpdate.js"></script>
 <script>
-    // Call functions to start the snow effect and update the connection chart
+    // Function to fetch and display bio links
+    async function fetchAndDisplayBioLinks() {
+        try {
+            const response = await fetch('/docs');
+            const docs = await response.json();
+
+            const linkList = document.getElementById('bioLinks');
+            docs.forEach(doc => {
+                const link = document.createElement('a');
+                link.href = `/docs/${doc}`;
+                link.textContent = doc;
+                link.classList.add('particle-text');
+                linkList.appendChild(link);
+            });
+        } catch (error) {
+            console.error('Error fetching or displaying bio links:', error);
+        }
+    }
+
+    // Function to start the snow effect
+    function startSnow() {
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const snowflakes = [];
+        const numFlakes = 200;
+
+        class Snowflake {
+            constructor(x, y, speed, size, opacity) {
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.size = size;
+                this.opacity = opacity;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = (Math.random() - 0.5) * 0.1;
+            }
+
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.angle) * 0.5;
+                this.angle += this.spin;
+
+                // Reset snowflake position if it goes below the canvas
+                if (this.y > canvas.height + this.size) {
+                    this.y = -this.size;
+                    this.x = Math.random() * canvas.width;
+                    this.opacity = 1;
+                }
+                
+                // Fade out snowflake as it approaches bottom of canvas
+                if (this.y > canvas.height - 50) {
+                    this.opacity -= 0.01;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createSnowflakes() {
+            for (let i = 0; i < numFlakes; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const speed = Math.random() * 2 + 1;
+                const size = Math.random() * 3 + 1;
+                const opacity = Math.random();
+                snowflakes.push(new Snowflake(x, y, speed, size, opacity));
+            }
+        }
+
+        function animateSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
+            });
+            requestAnimationFrame(animateSnow);
+        }
+
+        createSnowflakes();
+        animateSnow();
+    }
+
+    // Initialize the page
+    fetchAndDisplayBioLinks();
     startSnow();
-    startChart();
 </script>
 
 </body>
