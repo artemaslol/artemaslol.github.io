@@ -57,20 +57,24 @@
             left: 0;
             z-index: 0;
         }
-        pre {
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: left;
-            margin-top: 20px;
-        }
         .giant-text {
             font-size: 3rem;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
         @media only screen and (max-width: 600px) {
             .giant-text {
                 font-size: 2rem;
             }
+        }
+        .particle-text {
+            color: #66ccff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .particle-text:hover {
+            color: #ff99cc;
         }
     </style>
 </head>
@@ -101,7 +105,7 @@
         <canvas id="connectionChart"></canvas>
     </div>
     <canvas id="snowCanvas"></canvas>
-    <div class="giant-text" style="opacity: 0;">Artemas</div>
+    <div class="giant-text">Artemas</div>
 </div>
 
 <audio id="bgMusic" autoplay loop>
@@ -135,6 +139,16 @@
         // Start playing background music
         const bgMusic = document.getElementById('bgMusic');
         bgMusic.play();
+
+        // Start playing Spotify track
+        const spotifyPlayer = document.createElement('iframe');
+        spotifyPlayer.setAttribute('src', 'https://open.spotify.com/embed/track/1kEMfs7WR0aFhSlzTB7SmB?autoplay=true');
+        spotifyPlayer.setAttribute('width', '300');
+        spotifyPlayer.setAttribute('height', '80');
+        spotifyPlayer.setAttribute('frameborder', '0');
+        spotifyPlayer.setAttribute('allowtransparency', 'true');
+        spotifyPlayer.setAttribute('allow', 'encrypted-media');
+        document.body.appendChild(spotifyPlayer);
     }
 
     // Function to start the snow effect
@@ -154,8 +168,8 @@
                 this.speed = speed;
                 this.size = size;
                 this.opacity = opacity;
-                this.angle = Math.random() * 2 * Math.PI;
-                this.spin = Math.random() * 0.02 - 0.01;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = (Math.random() - 0.5) * 0.1;
             }
 
             update() {
