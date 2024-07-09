@@ -69,13 +69,6 @@
        `¨'                                                                                   `*´¯                                                     `¨'                        '`*'´‘            
 </pre>
 
-Murdered by
-<a class="particle-text" href="https://t.me/kurxx33">KURXX33D</a>
-Killed by
-<a class="particle-text" href="https://ammo.lol/mitsuki">KURXXED</a>
-Executed by
-<a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
-
 <div class="link-list" id="bioLinks">
     <!-- Links will be dynamically added here -->
 </div>
@@ -148,6 +141,8 @@ Executed by
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.angle);
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
                 ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
@@ -162,7 +157,7 @@ Executed by
                 const x = Math.random() * canvas.width;
                 const y = Math.random() * canvas.height;
                 const speed = Math.random() * 2 + 1;
-                const size = Math.random() * 3 + 1;
+                const size = Math.random() * 2 + 1; // Adjusted size
                 const opacity = Math.random();
                 snowflakes.push(new Snowflake(x, y, speed, size, opacity));
             }
