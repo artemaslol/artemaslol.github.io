@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.1.0/esm/ionicons.min.js"></script>
     <script src="https://kit.fontawesome.com/b0c7a14384.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -60,7 +61,7 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White glow */
         }
         .buttons img {
-            border-radius: 50%;
+            border: 2px solid red; /* Temporary border to check visibility */
             width: 120px; /* Adjusted size */
             height: 120px; /* Adjusted size */
             object-fit: cover; /* Ensures the image fits correctly */
@@ -141,6 +142,12 @@
             from, to { border-color: transparent }
             50% { border-color: white }
         }
+        .spotify-player {
+            width: 300px; /* Set width of the Spotify player */
+            height: 80px; /* Set height of the Spotify player */
+            border: none;
+            margin: 20px auto; /* Centered alignment */
+        }
     </style>
 </head>
 <body>
@@ -159,38 +166,20 @@
                         </div>
                     </div>
                     <h1>Kurxx33<span class="small">VFX Artist and Developer</span></h1>
+                    <iframe src="https://open.spotify.com/embed/track/3bdlwCZm9O5LP33Smf3i5b?si=b6b6fd62a8b44f84" class="spotify-player" allow="encrypted-media"></iframe>
                     <div>
                         <a href="https://t.me/kurxx33" target="_blank"><i class="fa-brands fa-telegram"></i></a>
                         <a href="https://x.com/kurxx33" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="https://www.tiktok.com/kurxx33" target="_blank"><i class="fa-brands fa-tiktok"></i></a>                        
-                    </div>                             
+                        <a href="https://tiktok.com/@kurxx33" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
+        <canvas id="rainCanvas"></canvas>
     </main>
-    <canvas id="rainCanvas"></canvas>
-
     <script>
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-        function ctrlShiftKey(e, keyCode) {
-            return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
-        }
-
-        document.onkeydown = (e) => {
-            if (
-                e.keyCode === 123 ||
-                ctrlShiftKey(e, 'I') ||
-                ctrlShiftKey(e, 'J') ||
-                ctrlShiftKey(e, 'C') ||
-                (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0)) ||
-                ctrlShiftKey(e, 'U') ||
-                (e.ctrlKey && e.keyCode === 'F'.charCodeAt(0)) ||
-                ctrlShiftKey(e, 'F') ||
-                (e.ctrlKey && e.keyCode === 'P'.charCodeAt(0)) ||
-                ctrlShiftKey(e, 'P') ||
-                (e.ctrlKey && e.keyCode === 'S'.charCodeAt(0))
-            ) {
+        document.onkeydown = function(e) {
+            if (e.keyCode >= 33 && e.keyCode <= 40 || e.keyCode === 13 || e.keyCode === 8 || (e.ctrlKey && e.keyCode === 85) || (e.ctrlKey && e.keyCode === 80) || (e.ctrlKey && e.keyCode === 83) || (e.ctrlKey && e.keyCode === 67) || (e.ctrlKey && e.keyCode === 88) || (e.ctrlKey && e.keyCode === 69) || (e.ctrlKey && e.keyCode === 90) || (e.ctrlKey && e.keyCode === 65) || (e.ctrlKey && e.keyCode === 73) || (e.ctrlKey && e.keyCode === 79) || (e.keyCode >= 112 && e.keyCode <= 123) || e.keyCode === 44 || e.keyCode === 17 || e.keyCode === 18 || e.keyCode === 91 || e.keyCode === 92 || e.keyCode === 93 || e.keyCode === 8 || (e.ctrlKey && e.keyCode === 79) || (e.ctrlKey && e.keyCode === 83)) {
                 e.preventDefault();
                 return false;
             }
@@ -247,5 +236,3 @@
     </script>
 </body>
 </html>
-
-
