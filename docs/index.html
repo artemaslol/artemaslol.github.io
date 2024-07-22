@@ -1,165 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>kurxx33</title>
+    <meta property="og:title" content="kurxx33">
+    <meta name="description" content="Kurxx33 forever">
+    <meta name="twitter:image:src" content="yourimage">
+    <meta name="theme-color" content="#000000">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.1.0/esm/ionicons.min.js"></script>
+    <script src="https://kit.fontawesome.com/b0c7a14384.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
+            margin: 0;
             overflow: hidden;
+            font-family: 'UnifrakturCook', cursive;
+            background: #000; /* Black background */
+            color: white;
+            position: relative;
         }
-        .rain {
-            position: fixed;
+        .clickanywhere {
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            background: transparent;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            z-index: 9999; /* Ensure it's on top */
+        }
+        .clickanywhere h4 {
+            color: white; /* White text */
+            font-size: 25px; /* Larger font size */
+        }
+        .biolink {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999; /* Place above rain canvas */
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; /* Smooth fade-in effect */
         }
         .card {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.63); /* Transparent dark glass */
             border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(14.7px);
-            -webkit-backdrop-filter: blur(14.7px);
-            border: 1px solid rgba(0, 0, 0, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Very thin white border */
+            padding: 30px;
+            width: 350px;
+            height: 400px;
+            text-align: center;
+            color: white; /* Ensure text color remains white */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White glow */
         }
-        .typewriter {
-            overflow: hidden;
-            border-right: .15em solid white;
+        .buttons img {
+            border-radius: 50%;
+            width: 120px; /* Smaller image size */
+            height: 120px; /* Smaller image size */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Larger shadow */
+            margin-bottom: 20px; /* Space between image and text */
+        }
+        .buttons img:hover {
+            transform: scale(1); /* Prevent image from getting bigger on hover */
+        }
+        .buttons h1 {
+            margin: 20px 0; /* Larger margin */
+            font-size: 44px; /* Increased font size by 20px */
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Larger shadow */
+            animation: breathing 3s infinite alternate;
+        }
+        .buttons h1 .small {
+            display: block;
+            font-size: 24px; /* Increased font size by 20px */
+            color: #ddd;
+        }
+        .buttons a {
+            color: white;
+            margin: 0 20px; /* Larger margin */
+            text-decoration: none;
+            font-size: 20px; /* Larger font size */
+            transition: text-shadow 0.3s ease;
+        }
+        .buttons a i {
+            font-size: 30px; /* Larger font size */
+            transition: transform 0.3s ease;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Larger shadow */
+        }
+        .buttons a:hover i {
+            transform: scale(1.2);
+            text-shadow: 0 0 16px rgba(255, 255, 255, 0.8); /* Larger shadow on hover */
+        }
+        @keyframes breathing {
+            0% {
+                color: white;
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Larger shadow */
+            }
+            100% {
+                color: lightcoral;
+                text-shadow: 0 0 20px rgba(255, 0, 0, 0.7); /* Larger shadow */
+            }
+        }
+        .discord {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .discord .avatar {
+            width: 50px; /* Smaller image size */
+            height: 50px; /* Smaller image size */
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .discord .username {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0 10px;
+        }
+        .bio-text {
+            display: inline-block;
             white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            animation: typing 4s steps(40, end), blink .75s step-end infinite;
+            overflow: hidden;
+            border-right: 0.15em solid #fff;
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+            color: white;
         }
         @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+            from { width: 0 }
+            to { width: 100% }
         }
-        @keyframes blink {
-            from, to { border-color: transparent; }
-            50% { border-color: white; }
-        }
-        .card-link {
-            color: white;
-            transition: transform 0.3s, text-shadow 0.3s;
-        }
-        .card-link:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 10px white;
-        }
-        .glow {
-            text-shadow: 0 0 5px white;
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
         }
     </style>
 </head>
 <body>
-    <!-- Splash Screen -->
-    <div id="splash-screen" class="fixed inset-0 bg-black flex items-center justify-center text-white text-3xl font-bold">
-        <span>Click to Enter</span>
+    <audio id="backgroundMusic" loop src="sad.mp3"></audio>
+    <div class="clickanywhere" onclick="startExperience()">
+        <h4>[  Hi👋, Click Anywhere  ]</h4>
     </div>
-
-    <!-- Main Content -->
-    <div id="content" class="hidden flex items-center justify-center h-screen">
-        <div class="card p-6 text-center max-w-sm mx-auto">
-            <img src="anime-firl.gif" alt="Profile Picture" class="w-32 h-32 mx-auto rounded-full mb-4">
-            <div class="text-xl font-semibold mb-2">@Kurxx33</div>
-            <div id="bio-text" class="typewriter text-white mb-4"></div>
-            <div class="flex justify-around mb-4">
-                <a href="https://t.me/kurxx33" target="_blank" class="card-link text-2xl"><i class="fa-brands fa-telegram"></i></a>
-                <a href="https://x.com/kurxx33" target="_blank" class="card-link text-2xl"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://www.tiktok.com/kurxx33" target="_blank" class="card-link text-2xl"><i class="fa-brands fa-tiktok"></i></a>
+    <main>
+        <div id="biolink" class="biolink">
+            <div class="card">
+                <div class="buttons">
+                    <img class="avatar" src="anime-firl.gif" title="pfp">
+                    <div class="discord">
+                        <div class="username">
+                            <div class="bio-text">The currently doing: Sleeping</div>
+                        </div>
+                    </div>
+                    <h1>Kurxx33<span class="small">VFX Artist and Developer</span></h1>
+                    <div>
+                        <a href="https://t.me/kurxx33" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                        <a href="https://x.com/kurxx33" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.tiktok.com/kurxx33" target="_blank"><i class="fa-brands fa-tiktok"></i></a>                        
+                    </div>                             
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+    <canvas id="rainCanvas"></canvas>
 
-    <!-- Rain Effect -->
-    <canvas id="rain" class="rain"></canvas>
-
-    <!-- JavaScript -->
     <script>
-        // Splash Screen Logic
-        document.getElementById('splash-screen').addEventListener('click', () => {
-            document.getElementById('splash-screen').classList.add('hidden');
-            document.getElementById('content').classList.remove('hidden');
-            const audio = new Audio('sad.mp3');
-            audio.play();
-        });
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-        // Typewriter Effect for Quotes
-        const bioTextElement = document.getElementById('bio-text');
-        const quotes = [
-            "You know what i hate most in this world?...Anyone who isn't free...they are no better than cattle...",
-            "Heart <b>Bolded</b> over Mind <b>Bolded</b> and Body <b>Bolded</b> over Soul <b>Bolded</b>",
-            "Everyone is a slave to something..wether it be real or not..."
-        ];
-        let currentQuoteIndex = 0;
-        let currentCharIndex = 0;
-        let deleting = false;
-        
-        function typeWriter() {
-            const currentQuote = quotes[currentQuoteIndex];
-            if (deleting) {
-                bioTextElement.textContent = currentQuote.substring(0, currentCharIndex--);
-                if (currentCharIndex < 0) {
-                    deleting = false;
-                    setTimeout(typeWriter, 500);
-                } else {
-                    setTimeout(typeWriter, 50);
-                }
-            } else {
-                bioTextElement.innerHTML = currentQuote.substring(0, currentCharIndex + 1);
-                if (currentCharIndex < currentQuote.length) {
-                    currentCharIndex++;
-                    setTimeout(typeWriter, 100);
-                } else {
-                    deleting = true;
-                    setTimeout(typeWriter, 1500);
+        function ctrlShiftKey(e, keyCode) {
+            return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+        }
+
+        document.onkeydown = (e) => {
+            if (
+                e.keyCode === 123 ||
+                ctrlShiftKey(e, 'I') ||
+                ctrlShiftKey(e, 'J') ||
+                ctrlShiftKey(e, 'C') ||
+                (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0)) ||
+                ctrlShiftKey(e, 'U') ||
+                (e.ctrlKey && e.keyCode === 'F'.charCodeAt(0)) ||
+                ctrlShiftKey(e, 'F') ||
+                (e.ctrlKey && e.keyCode === 'P'.charCodeAt(0)) ||
+                ctrlShiftKey(e, 'P') ||
+                (e.ctrlKey && e.keyCode === 'S'.charCodeAt(0)) ||
+                ctrlShiftKey(e, 'S') ||
+                (e.ctrlKey && e.keyCode === 'H'.charCodeAt(0)) ||
+                (e.ctrlKey && e.keyCode === 'W'.charCodeAt(0)) ||
+                (e.ctrlKey && e.keyCode === 'A'.charCodeAt(0))
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        function startExperience() {
+            document.querySelector('.clickanywhere').style.display = 'none';
+            document.querySelector('#biolink').style.display = 'block';
+            document.querySelector('#biolink').style.opacity = 1;
+            document.querySelector('#backgroundMusic').play();
+        }
+
+        function createRain() {
+            const canvas = document.getElementById('rainCanvas');
+            const ctx = canvas.getContext('2d');
+            const drops = [];
+
+            function init() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                for (let i = 0; i < 100; i++) {
+                    drops.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        length: Math.random() * 20 + 10,
+                        speed: Math.random() * 2 + 2
+                    });
                 }
             }
-        }
-        typeWriter();
-        
-        // Rain Effect
-        const canvas = document.getElementById('rain');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
-        let raindrops = [];
-        const numRaindrops = 150;
-        
-        function createRaindrops() {
-            for (let i = 0; i < numRaindrops; i++) {
-                raindrops.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    length: Math.random() * 20 + 10,
-                    speed: Math.random() * 5 + 2
-                });
-            }
-        }
-        createRaindrops();
-
-        function drawRain() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 1;
-            raindrops.forEach(drop => {
-                ctx.beginPath();
-                ctx.moveTo(drop.x, drop.y);
-                ctx.lineTo(drop.x, drop.y + drop.length);
-                ctx.stroke();
-                drop.y += drop.speed;
-                if (drop.y > canvas.height) {
-                    drop.y = -drop.length;
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                for (let drop of drops) {
+                    ctx.beginPath();
+                    ctx.moveTo(drop.x, drop.y);
+                    ctx.lineTo(drop.x, drop.y + drop.length);
+                    ctx.stroke();
+                    drop.y += drop.speed;
+                    if (drop.y > canvas.height) {
+                        drop.y = -drop.length;
+                    }
                 }
-            });
-            requestAnimationFrame(drawRain);
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', init);
+            init();
+            draw();
         }
-        drawRain();
+
+        createRain();
     </script>
 </body>
 </html>
+
