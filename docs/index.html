@@ -61,14 +61,15 @@
         }
         .buttons img {
             border-radius: 50%;
-            width: 120px; /* Smaller image size */
-            height: 120px; /* Smaller image size */
+            width: 120px; /* Adjusted size */
+            height: 120px; /* Adjusted size */
+            object-fit: cover; /* Ensures the image fits correctly */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Larger shadow */
             margin-bottom: 20px; /* Space between image and text */
         }
         .buttons img:hover {
-            transform: scale(1); /* Prevent image from getting bigger on hover */
+            transform: scale(1.05); /* Slight zoom on hover */
         }
         .buttons h1 {
             margin: 20px 0; /* Larger margin */
@@ -151,7 +152,7 @@
         <div id="biolink" class="biolink">
             <div class="card">
                 <div class="buttons">
-                    <img class="avatar" src="anime-firl.gif" title="pfp">
+                    <img class="avatar" src="anime-firl.gif" title="pfp" alt="Profile Picture">
                     <div class="discord">
                         <div class="username">
                             <div class="bio-text">The currently doing: Sleeping</div>
@@ -188,10 +189,7 @@
                 ctrlShiftKey(e, 'F') ||
                 (e.ctrlKey && e.keyCode === 'P'.charCodeAt(0)) ||
                 ctrlShiftKey(e, 'P') ||
-                (e.ctrlKey && e.keyCode === 'S'.charCodeAt(0)) ||
-                ctrlShiftKey(e, 'S') ||
-                (e.ctrlKey && e.keyCode === 'H'.charCodeAt(0)) ||
-                (e.ctrlKey && e.keyCode === 'W'.charCodeAt(0))
+                (e.ctrlKey && e.keyCode === 'S'.charCodeAt(0))
             ) {
                 e.preventDefault();
                 return false;
@@ -249,3 +247,4 @@
     </script>
 </body>
 </html>
+
