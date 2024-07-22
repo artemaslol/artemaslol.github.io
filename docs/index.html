@@ -3,152 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Kurxx33</title>
+    <title>Portfolio</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Fira Code', monospace;
             overflow: hidden;
-        }
-        .glass {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .glow {
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
         }
         .rain {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
-            overflow: hidden;
+            background: transparent;
         }
-        .rain-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .card {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(14.7px);
+            -webkit-backdrop-filter: blur(14.7px);
+            border: 1px solid rgba(0, 0, 0, 1);
         }
         .typewriter {
             overflow: hidden;
-            border-right: .15em solid #fff;
+            border-right: .15em solid white;
             white-space: nowrap;
             margin: 0 auto;
             letter-spacing: .15em;
-            animation: blink-caret .75s step-end infinite;
+            animation: typing 4s steps(40, end), blink .75s step-end infinite;
         }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #fff }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+        .card-link {
+            color: white;
+            transition: transform 0.3s, text-shadow 0.3s;
+        }
+        .card-link:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 10px white;
+        }
+        .glow {
+            text-shadow: 0 0 5px white;
         }
     </style>
 </head>
 <body>
-    <div class="rain"></div>
-    
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="glass p-10 max-w-lg mx-auto">
-            <h1 class="text-3xl font-bold mb-4 text-center glow">Kurxx33</h1>
-            <p class="text-center text-lg mb-6">Creator of Private Bio Sites <a href="https://artemas.lol" class="text-blue-400 underline">artemas.lol</a></p>
-            
-            <div class="text-center mb-8">
-                <h2 class="text-xl font-semibold glow">Aliases:</h2>
-                <p class="text-lg mb-4">Kurxxy, Kurxxed, XDFKurxx</p>
-                
-                <h2 class="text-xl font-semibold glow">Contact:</h2>
-                <p class="text-lg">Email: <a href="mailto:kurxx33@proton.me" class="text-blue-400 underline">kurxx33@proton.me</a></p>
-            </div>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 bg-black flex items-center justify-center text-white text-3xl font-bold">
+        <span>Click to Enter</span>
+    </div>
 
-            <div class="text-center">
-                <div class="typewriter text-lg mb-4" id="quote1"></div>
-                <div class="typewriter text-lg mb-4" id="quote2"></div>
-                <div class="typewriter text-lg mb-4" id="quote3"></div>
+    <!-- Main Content -->
+    <div id="content" class="hidden flex items-center justify-center h-screen">
+        <div class="card p-6 text-center max-w-sm mx-auto">
+            <img src="anime-firl.gif" alt="Profile Picture" class="w-32 h-32 mx-auto rounded-full mb-4">
+            <div class="text-xl font-semibold mb-2">@Kurxx33</div>
+            <div id="bio-text" class="typewriter text-white mb-4"></div>
+            <div class="flex justify-around mb-4">
+                <a href="https://t.me/kurxx33" target="_blank" class="card-link text-2xl"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://x.com/kurxx33" target="_blank" class="card-link text-2xl"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.tiktok.com/kurxx33" target="_blank" class="card-link text-2xl"><i class="fa-brands fa-tiktok"></i></a>
             </div>
         </div>
     </div>
 
+    <!-- Rain Effect -->
+    <canvas id="rain" class="rain"></canvas>
+
+    <!-- JavaScript -->
     <script>
+        // Splash Screen Logic
+        document.getElementById('splash-screen').addEventListener('click', () => {
+            document.getElementById('splash-screen').classList.add('hidden');
+            document.getElementById('content').classList.remove('hidden');
+            const audio = new Audio('sad.mp3');
+            audio.play();
+        });
+
+        // Typewriter Effect for Quotes
+        const bioTextElement = document.getElementById('bio-text');
+        const quotes = [
+            "You know what i hate most in this world?...Anyone who isn't free...they are no better than cattle...",
+            "Heart <b>Bolded</b> over Mind <b>Bolded</b> and Body <b>Bolded</b> over Soul <b>Bolded</b>",
+            "Everyone is a slave to something..wether it be real or not..."
+        ];
+        let currentQuoteIndex = 0;
+        let currentCharIndex = 0;
+        let deleting = false;
+        
+        function typeWriter() {
+            const currentQuote = quotes[currentQuoteIndex];
+            if (deleting) {
+                bioTextElement.textContent = currentQuote.substring(0, currentCharIndex--);
+                if (currentCharIndex < 0) {
+                    deleting = false;
+                    setTimeout(typeWriter, 500);
+                } else {
+                    setTimeout(typeWriter, 50);
+                }
+            } else {
+                bioTextElement.innerHTML = currentQuote.substring(0, currentCharIndex + 1);
+                if (currentCharIndex < currentQuote.length) {
+                    currentCharIndex++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    deleting = true;
+                    setTimeout(typeWriter, 1500);
+                }
+            }
+        }
+        typeWriter();
+        
         // Rain Effect
-        function createRain() {
-            const canvas = document.createElement('canvas');
-            canvas.classList.add('rain-canvas');
-            document.querySelector('.rain').appendChild(canvas);
-            const ctx = canvas.getContext('2d');
-            const numDrops = 100;
-            const drops = [];
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        const canvas = document.getElementById('rain');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            class Drop {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.length = Math.random() * 20 + 10;
-                    this.speed = Math.random() * 5 + 2;
-                    this.opacity = Math.random() * 0.5 + 0.3;
-                }
-
-                fall() {
-                    this.y += this.speed;
-                    if (this.y > canvas.height) {
-                        this.y = -this.length;
-                        this.x = Math.random() * canvas.width;
-                    }
-                }
-
-                draw() {
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(this.x, this.y);
-                    ctx.lineTo(this.x, this.y + this.length);
-                    ctx.stroke();
-                }
-            }
-
-            for (let i = 0; i < numDrops; i++) {
-                drops.push(new Drop());
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                drops.forEach(drop => {
-                    drop.fall();
-                    drop.draw();
+        let raindrops = [];
+        const numRaindrops = 150;
+        
+        function createRaindrops() {
+            for (let i = 0; i < numRaindrops; i++) {
+                raindrops.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    length: Math.random() * 20 + 10,
+                    speed: Math.random() * 5 + 2
                 });
-                requestAnimationFrame(animate);
             }
-            animate();
         }
-        createRain();
+        createRaindrops();
 
-        // Typewriter Effect
-        function typewriterEffect(elementId, text, speed) {
-            const element = document.getElementById(elementId);
-            let index = 0;
-
-            function type() {
-                if (index < text.length) {
-                    element.textContent += text.charAt(index);
-                    index++;
-                    setTimeout(type, speed);
+        function drawRain() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            raindrops.forEach(drop => {
+                ctx.beginPath();
+                ctx.moveTo(drop.x, drop.y);
+                ctx.lineTo(drop.x, drop.y + drop.length);
+                ctx.stroke();
+                drop.y += drop.speed;
+                if (drop.y > canvas.height) {
+                    drop.y = -drop.length;
                 }
-            }
-            type();
+            });
+            requestAnimationFrame(drawRain);
         }
-
-        typewriterEffect('quote1', 'You know what i hate most in this world?...Anyone who isn\'t free...they are no better than cattle...', 50);
-        typewriterEffect('quote2', 'Heart(Bolded) over Mind(Bolded) and Body(Bolded) over Soul(Bolded)', 50);
-        typewriterEffect('quote3', 'Everyone is a slave to something..wether it be real or not...', 50);
+        drawRain();
     </script>
 </body>
 </html>
