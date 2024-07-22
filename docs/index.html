@@ -46,7 +46,7 @@
             transform: translate(-50%, -50%);
             z-index: 999; /* Place above rain canvas */
             opacity: 0;
-            transition: opacity 1.5s ease-in-out; /* Smooth fade-in effect */
+            transition: opacity 0.5s ease-in-out; /* Quick fade-in effect */
         }
         .card {
             background: rgba(0, 0, 0, 0.63); /* Transparent dark glass */
@@ -143,7 +143,7 @@
     </style>
 </head>
 <body>
-    <audio id="backgroundMusic" loop src="sad.mp3"></audio>
+    <audio id="backgroundMusic" loop src="docs/sad.mp3"></audio>
     <div class="clickanywhere" onclick="startExperience()">
         <h4>[  Hi👋, Click Anywhere  ]</h4>
     </div>
@@ -151,7 +151,7 @@
         <div id="biolink" class="biolink">
             <div class="card">
                 <div class="buttons">
-                    <img class="avatar" src="anime-firl.gif" title="pfp">
+                    <img class="avatar" src="docs/anime-firl.gif" title="pfp">
                     <div class="discord">
                         <div class="username">
                             <div class="bio-text">The currently doing: Sleeping</div>
@@ -214,12 +214,12 @@
             function init() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 300; i++) { // Increased number of drops
                     drops.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        length: Math.random() * 20 + 10,
-                        speed: Math.random() * 2 + 2
+                        length: Math.random() * 30 + 10, // Increased length
+                        speed: Math.random() * 5 + 5 // Increased speed
                     });
                 }
             }
@@ -250,4 +250,3 @@
     </script>
 </body>
 </html>
-
