@@ -3,193 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#33 Forever</title>
+    <title>Portfolio - Kurxx33</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
         body {
-            background-color: black;
-            color: white;
-            text-align: center;
-            font-family: "Pixelify Sans";
-            overflow: hidden; /* Prevent scrolling */
+            background-color: #000;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            overflow: hidden;
         }
-        a {
-            color: white;
-            text-decoration: none;
+        .glass {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
-        .particle-text {
-            color: white;
+        .glow {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
         }
-        .link-list {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .link-list a {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-        #snowCanvas {
-            position: fixed;
+        .rain {
+            position: absolute;
             top: 0;
             left: 0;
-            z-index: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
         }
-        pre {
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: left;
-            margin-top: 20px;
+        .rain-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-        .giant-text {
-            font-size: 3rem;
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #fff;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: blink-caret .75s step-end infinite;
         }
-        @media only screen and (max-width: 600px) {
-            .giant-text {
-                font-size: 2rem;
-            }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #fff }
         }
     </style>
 </head>
 <body>
-
-<pre>
-                ,.,   '           ,. -  .,                       ,  . .,  °                   _,.,  °        ,·'´¨;.  '                                   ,.,   '                   ,. -,    
-              ;´   '· .,        ,' ,. -  .,  `' ·,          ;'´    ,   ., _';\'          ,.·'´  ,. ,  `;\ '      ;   ';:\           .·´¨';\                 ;´   '· .,            ,.·'´,    ,'\   
-            .´  .-,    ';\      '; '·~;:::::'`,   ';\       \:´¨¯:;'   `;::'\:'\       .´   ;´:::::\`'´ \'\     ;     ';:'\      .'´     ;:'\              .´  .-,    ';\      ,·'´ .·´'´-·'´::::\' 
-           /   /:\:';  ;:'\'     ;   ,':\::;:´  .·´::\'       \::::;   ,'::_'\;'      /   ,'::\::::::\:::\:'    ;   ,  '·:;  .·´,.´';  ,'::;'             /   /:\:';   ;:'\'   ;    ';:::\::\::;:'  
-         ,'  ,'::::'\';  ;::';     ;  ·'-·'´,.-·'´:::::::';          ,'  ,'::;'  ‘       ;   ;:;:-·'~^ª*';\'´     ;   ;'`.    ¨,.·´::;'  ;:::;            ,'  ,'::::'\';  ;::';   \·.    `·;:'-·'´     
-     ,.-·'  '·~^*'´¨,  ';::;   ;´    ':,´:::::::::::·´'           ;  ;:::;  °       ;  ,.-·:*'´¨'`*´\::\ '    ;  ';::; \*´\:::::;  ,':::;‘        ,.-·'  '·~^*'´¨,  ';::;    \:`·.   '`·,  '     
-     ':,  ,·:²*´¨¯'`;  ;::';    ';  ,    `·:;:-·'´                ;  ;::;'‘       ;   ;\::::::::::::'\;'    ';  ,'::;   \::\;:·';  ;:::; '        ':,  ,·:²*´¨¯'`;  ;::';      `·:'`·,   \'      
-     ,'  / \::::::::';  ;::';    ; ,':\'`:·.,  ` ·.,               ;  ;::;'‚         ;  ;'_\_:;:: -·^*';\    ;  ';::;     '*´  ;',·':::;‘         ,'  / \::::::::';  ;::';       ,.'-:;'  ,·\     
-    ,' ,'::::\·²*'´¨¯':,'\:;     \·-;::\:::::'`:·-.,';             ',.'\::;'‚         ';    ,  ,. -·:*'´:\:'\°  \´¨\::;          \¨\::::;          ,' ,'::::\·²*'´¨¯':,'\:;   ,·'´     ,.·´:::'\    
-    \`¨\:::/          \::\'      \::\:;'` ·:;:::::\::\'            \::\:;'‚          \`*´ ¯\:::::::::::\;' '  '\::\;            \:\;·'‘          \`¨\:::/          \::\'    \`*'´\::::::::;·'‘   
-     '\::\;'            '\;'  '     '·-·'       `' · -':::''            \;:'‘      ‘       \:::::\;::-·^*'´         '´¨               ¨'                       '\::\;'            '\;'  '‘         
-       `¨'                                                                                   `*´¯                                                     `¨'                        '`*'´‘            
-</pre>
-
-<div class="link-list" id="bioLinks">
-    <div>Murdered by
-        <a class="particle-text" href="https://t.me/kurxx33">KURXX33D</a>
-    </div>
-    <div>Killed by
-        <a class="particle-text" href="https://ammo.lol/mitsuki">KURXXED</a>
-    </div>
-    <div>Executed by
-        <a class="particle-text" href="https://x.com/kurxx33">XDFKURXX</a>
-    </div>
-</div>
-
-<canvas id="snowCanvas"></canvas>
-<audio id="bgMusic" autoplay loop>
-    <source src="youllneverknow.mp4" type="audio/mp4">
-</audio>
-
-<script>
-    // Function to fetch and display bio links
-    async function fetchAndDisplayBioLinks() {
-        try {
-            const response = await fetch('/docs');
-            const docs = await response.json();
-
-            const linkList = document.getElementById('bioLinks');
-            docs.forEach(doc => {
-                const link = document.createElement('a');
-                link.href = `/docs/${doc}`;
-                link.textContent = doc;
-                link.classList.add('particle-text');
-                const div = document.createElement('div');
-                div.appendChild(link);
-                linkList.appendChild(div);
-            });
-        } catch (error) {
-            console.error('Error fetching or displaying bio links:', error);
-        }
-    }
-
-    // Function to start the snow effect
-    function startSnow() {
-        const canvas = document.getElementById('snowCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const snowflakes = [];
-        const numFlakes = 200;
-
-        class Snowflake {
-            constructor(x, y, speed, size, opacity) {
-                this.x = x;
-                this.y = y;
-                this.speed = speed;
-                this.size = size;
-                this.opacity = opacity;
-                this.angle = Math.random() * Math.PI * 2;
-                this.spin = (Math.random() - 0.5) * 0.1;
-            }
-
-            update() {
-                this.y += this.speed;
-                this.x += Math.sin(this.angle) * 0.5;
-                this.angle += this.spin;
-
-                // Reset snowflake position if it goes below the canvas
-                if (this.y > canvas.height + this.size) {
-                    this.y = -this.size;
-                    this.x = Math.random() * canvas.width;
-                    this.opacity = 1;
-                }
+    <div class="rain"></div>
+    
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="glass p-10 max-w-lg mx-auto">
+            <h1 class="text-3xl font-bold mb-4 text-center glow">Kurxx33</h1>
+            <p class="text-center text-lg mb-6">Creator of Private Bio Sites <a href="https://artemas.lol" class="text-blue-400 underline">artemas.lol</a></p>
+            
+            <div class="text-center mb-8">
+                <h2 class="text-xl font-semibold glow">Aliases:</h2>
+                <p class="text-lg mb-4">Kurxxy, Kurxxed, XDFKurxx</p>
                 
-                // Fade out snowflake as it approaches bottom of canvas
-                if (this.y > canvas.height - 50) {
-                    this.opacity -= 0.01;
+                <h2 class="text-xl font-semibold glow">Contact:</h2>
+                <p class="text-lg">Email: <a href="mailto:kurxx33@proton.me" class="text-blue-400 underline">kurxx33@proton.me</a></p>
+            </div>
+
+            <div class="text-center">
+                <div class="typewriter text-lg mb-4" id="quote1"></div>
+                <div class="typewriter text-lg mb-4" id="quote2"></div>
+                <div class="typewriter text-lg mb-4" id="quote3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Rain Effect
+        function createRain() {
+            const canvas = document.createElement('canvas');
+            canvas.classList.add('rain-canvas');
+            document.querySelector('.rain').appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            const numDrops = 100;
+            const drops = [];
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            class Drop {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.length = Math.random() * 20 + 10;
+                    this.speed = Math.random() * 5 + 2;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                }
+
+                fall() {
+                    this.y += this.speed;
+                    if (this.y > canvas.height) {
+                        this.y = -this.length;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+
+                draw() {
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.x, this.y + this.length);
+                    ctx.stroke();
                 }
             }
 
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
+            for (let i = 0; i < numDrops; i++) {
+                drops.push(new Drop());
             }
-        }
 
-        function createSnowflakes() {
-            for (let i = 0; i < numFlakes; i++) {
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                const speed = Math.random() * 2 + 1;
-                const size = Math.random() * 2 + 1;
-                const opacity = Math.random();
-                snowflakes.push(new Snowflake(x, y, speed, size, opacity));
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drops.forEach(drop => {
+                    drop.fall();
+                    drop.draw();
+                });
+                requestAnimationFrame(animate);
             }
+            animate();
+        }
+        createRain();
+
+        // Typewriter Effect
+        function typewriterEffect(elementId, text, speed) {
+            const element = document.getElementById(elementId);
+            let index = 0;
+
+            function type() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
         }
 
-        function animateSnow() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            snowflakes.forEach(flake => {
-                flake.update();
-                flake.draw();
-            });
-            requestAnimationFrame(animateSnow);
-        }
-
-        createSnowflakes();
-        animateSnow();
-    }
-
-    // Initialize the page
-    fetchAndDisplayBioLinks();
-    startSnow();
-</script>
-
+        typewriterEffect('quote1', 'You know what i hate most in this world?...Anyone who isn\'t free...they are no better than cattle...', 50);
+        typewriterEffect('quote2', 'Heart(Bolded) over Mind(Bolded) and Body(Bolded) over Soul(Bolded)', 50);
+        typewriterEffect('quote3', 'Everyone is a slave to something..wether it be real or not...', 50);
+    </script>
 </body>
 </html>
